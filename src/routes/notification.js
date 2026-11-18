@@ -8,7 +8,7 @@ import {
   markAsRead,
 } from "../controllers/notification.js";
 
-import { adminOnly, profileUser } from "../middleware/authMiddleware.js";
+import { adminOnly, profileUser } from "../middleware/authMiddleWare.js";
 
 const notificationRouter = express.Router();
 
