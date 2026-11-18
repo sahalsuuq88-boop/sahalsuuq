@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import { profileUser, adminOnly } from "../middleware/authMiddleWare.js";
 
 const adminRouter = express.Router();
