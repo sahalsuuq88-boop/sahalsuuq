@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import { mangoDbUri } from "./config.js";
 import chalk from "chalk";
+import crypto from "node:crypto";
+if (!globalThis.crypto) {
+  globalThis.crypto = crypto;
+}
 
 const connectDB = async () => {
   try {
