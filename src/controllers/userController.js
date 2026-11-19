@@ -1,5 +1,5 @@
 import { googleClient, jwtSecret } from "../config/config.js";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
