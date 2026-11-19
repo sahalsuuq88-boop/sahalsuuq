@@ -1,4 +1,8 @@
-import "./config/cryptoPolyfill.js";
+import crypto from "node:crypto";
+if (!globalThis.crypto) {
+  globalThis.crypto = crypto;
+}
+
 import "dotenv/config";
 import dns from "dns";
 
