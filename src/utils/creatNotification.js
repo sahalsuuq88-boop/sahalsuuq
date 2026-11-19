@@ -1,5 +1,5 @@
 import Notification from "../model/notification.js";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import { sendPushNotification } from "./pushNotification.js";
 
 export const createNotification = async ({

@@ -1,5 +1,5 @@
 import { jwtSecret } from "../config/config.js";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import jwt from 'jsonwebtoken';
 
 export const profileUser = async (req, res, next) => {

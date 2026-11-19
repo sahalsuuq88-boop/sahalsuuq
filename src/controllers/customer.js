@@ -1,4 +1,4 @@
-import User from "../model/user.js";
+import User from "../model/User.js";
 import Order from "../model/Oder.js";
 import asyncHandler from "express-async-handler";
 

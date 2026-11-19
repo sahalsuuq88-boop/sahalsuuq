@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import { sendPushNotification } from "../services/pushNotificationServices.js";
 
 export const testPushNotification = asyncHandler(async (req, res) => {
