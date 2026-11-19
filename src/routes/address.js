@@ -8,7 +8,7 @@ import {
   setDefaultAddress,
 } from "../controllers/address.js";
 
-import { profileUser } from "../middleware/authMiddleware.js";
+import { profileUser } from "../middleware/authMiddleWare.js";
 
 const AddessRouter = express.Router();
 
