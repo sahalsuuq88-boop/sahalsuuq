@@ -2,7 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 
 import ExchangeRate from "../model/exchange.js";
-import { profileUser, adminOnly } from "../middleware/authMiddleware.js";
+import { profileUser, adminOnly } from "../middleware/authMiddleWare.js";
 
 const exchangeRateRouter = express.Router();
 
