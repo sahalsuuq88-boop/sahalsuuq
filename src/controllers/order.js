@@ -1,6 +1,6 @@
 import Order from "../model/Oder.js";
 import Product from "../model/product.js";
-import User from "../model/user.js";
+import User from "../model/User.js";
 import asyncHandler from "express-async-handler";
 
 import { createNotification } from "../services/notificationServer.js";
