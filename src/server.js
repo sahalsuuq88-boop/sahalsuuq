@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import "./config/cryptoPolyfill.js";
+import "dotenv/config";
 import dns from "dns";
 
 dns.setServers([
