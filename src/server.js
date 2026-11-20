@@ -58,6 +58,7 @@ app.use(cors({
     "http://192.168.1.106:3000",
     "http://192.168.0.113:3000",
     // "http://192.168.105.247:3000",
+    "https://sahalsuuq-frontend.vercel.app",
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
