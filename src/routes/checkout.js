@@ -115,6 +115,13 @@ checkoutRoute.post("/:id/finalize", profileUser, asyncHandler(async (req, res) =
 
       // Delete the cart associated with the user
       await Cart.findOneAndDelete({ user: checkoutModel.user });
+
+      // U dir Admin-ka ogeysiis real-time ah
+      const io = req.app.get("io");
+      if (io) {
+        io.to("admins").emit("newOrder", finalOrder);
+      }
+
       res.status(201).send(finalOrder);
     } else if (checkoutModel.isFinalized) {
       // WAA INAAD HESTAA 'checkoutId' gudaha Order model-ka si aad u hesho

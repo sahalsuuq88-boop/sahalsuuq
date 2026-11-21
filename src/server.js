@@ -5,17 +5,17 @@ if (!globalThis.crypto) {
 
 import "dotenv/config";
 import dns from "dns";
+import http from "http";
+import { Server } from "socket.io";
 
 dns.setServers([
   "8.8.8.8",
   "8.8.4.4"
 ]);
+
 import express from "express";
 import cors from "cors";
 import chalk from "chalk";
-// import helmet from 'helmet';
-// import cookieParser from 'cookie-parser';
-// import morgan from 'morgan';
 
 import connectDB from "./config/db.js";
 
@@ -24,7 +24,6 @@ import productRouter from './routes/product.js';
 import cartRouter from './routes/cart.js';
 import checkoutRoute from './routes/checkout.js';
 import orderRouter from './routes/oder.js';
-// import cloudRouter from './routes/upload.js';
 import subscribeRouter from './routes/subscribe.js';
 
 // Admin
@@ -46,20 +45,20 @@ import systemRouter from './routes/sytemSettings.js';
 import expenseRouter from './routes/expense.js';
 import exchangeRateRouter from './routes/exchange.js';
 
-
-
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://192.168.1.106:3000",
+  "http://192.168.0.113:3000",
+  "https://sahalsuuq-frontend.vercel.app",
+];
 
 // Middleware
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "http://192.168.1.106:3000",
-    "http://192.168.0.113:3000",
-    // "http://192.168.105.247:3000",
-    "https://sahalsuuq-frontend.vercel.app",
-  ],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -67,24 +66,35 @@ app.use(cors({
 
 app.use(express.json());
 
-
-// app.use(cors());
-
-// app.use(helmet());
-
-// app.use(express.json());
-
-// app.use(express.urlencoded({ extended: true }));
-
-// app.use(cookieParser());
-
-// app.use(morgan("dev"));
-
 // --- KAN WAA WAXA LA KUSODARAY (Ping Endpoint) ---
 app.get("/ping", (req, res) => {
   res.status(200).send("Server-ka Sahal Suuq wuu taagan yahay oo wuu shaqeynayaa! 🚀");
 });
 // ------------------------------------------------
+
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+// Waxaad ku kaydin kartaa io gudaha app si route-yada orders-ku u isticmaalaan
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("Client connected via Socket.io:", socket.id);
+
+  // Admin-ku wuxuu geli karaa qol u gaar ah
+  socket.on("joinAdminRoom", () => {
+    socket.join("admins");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+});
 
 // Routes
 app.use("/api/user", userRouter);
@@ -94,31 +104,31 @@ app.use("/api/cart", cartRouter);
 app.use("/api/checkout", checkoutRoute);
 app.use("/api/orders", orderRouter);
 app.use("/api", subscribeRouter);
-app.use('/api/categories', categoryRouter)
-app.use('/api/dashboard', dashboardRouter)
-app.use('/api/customers', customerRouter)
-app.use('/api/payment', paymentRouter)
-app.use('/api/notifications', notificationRouter)
-app.use('/api/whishlist', wishlistRouter)
+app.use('/api/categories', categoryRouter);
+app.use('/api/dashboard', dashboardRouter);
+app.use('/api/customers', customerRouter);
+app.use('/api/payment', paymentRouter);
+app.use('/api/notifications', notificationRouter);
+app.use('/api/whishlist', wishlistRouter);
 app.use('/api/about', AboutCrouter);
 app.use('/api/contact', ContactRouter);
 app.use('/api/faq', FaqRouter);
 app.use('/api/address', AddessRouter);
 app.use("/api/notifications", NotificationRouter);
 app.use("/api/expenses", expenseRouter);
+
 // Admin routes
 app.use('/api/admin/users', adminRouter);
 app.use('/api/admin/products', productAdminRoute);
 app.use('/api/admin/orders', orderAdminRouter);
-app.use('/api/system-settings', systemRouter)
-
+app.use('/api/system-settings', systemRouter);
 
 // DB + Server
 const startServer = async () => {
   try {
     await connectDB();
 
-    app.listen(PORT, "0.0.0.0", () => {
+    server.listen(PORT, "0.0.0.0", () => {
       console.log(
         `${chalk.green.bold("Server")} running on port ${chalk.blue.bold(PORT)}`
       );

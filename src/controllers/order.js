@@ -331,6 +331,16 @@ export const createOrder = asyncHandler(async (req, res) => {
     console.error("❌ CUSTOMER NOTIFICATION ERROR:", error.message);
   }
 
+  const io = req.app.get("io");
+  if (io) {
+    const populatedOrder = await Order.findById(order._id)
+      .populate("user", "name email number")
+      .populate("orderItems.productId");
+
+    io.to("admins").emit("newOrder", populatedOrder || order);
+  }
+
+
   // =================================================
   // RESPONSE
   // =================================================
