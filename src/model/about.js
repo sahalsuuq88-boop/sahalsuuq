@@ -54,7 +54,7 @@ const aboutSchema = new mongoose.Schema(
 
     email: {
       type: String,
-      default: "support@awl.online",
+      default: "support@helsuuq.online",
     },
 
     phone: {

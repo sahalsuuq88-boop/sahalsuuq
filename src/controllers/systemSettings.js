@@ -86,8 +86,8 @@ export const updateStoreStatus = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: settings.isStoreOpen
-        ? "AWL Trading is now OPEN"
-        : "AWL Trading is now CLOSED",
+        ? "HEL SUUQ is now OPEN"
+        : "HEL SUUQ is now CLOSED",
       settings,
     });
   } catch (error) {

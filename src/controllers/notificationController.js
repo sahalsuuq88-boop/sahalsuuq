@@ -21,7 +21,7 @@ export const testPushNotification = asyncHandler(async (req, res) => {
 
   const result = await sendPushNotification({
     pushToken: user.pushToken,
-    title: "AWL Trading",
+    title: "HEL SUUQ",
     body: "Push notification is working successfully! 🎉",
     data: {
       type: "test",

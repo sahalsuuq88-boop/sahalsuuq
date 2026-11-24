@@ -9,7 +9,7 @@ const systemSettingsSchema = new mongoose.Schema(
 
     message: {
       type: String,
-      default: "AWL Trading is currently closed. Please come back later.",
+      default: "HEL SUUQ is currently closed. Please come back later.",
       trim: true,
     },
 

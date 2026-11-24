@@ -20,7 +20,7 @@ export const storeOpenMiddleware = async (req, res, next) => {
         storeClosed: true,
         message:
           settings.message ||
-          "AWL Trading is currently closed. Please come back later.",
+          "HEL SUUQ is currently closed. Please come back later.",
         reason: settings.reason || "",
         closedUntil: settings.closedUntil || null,
       });
